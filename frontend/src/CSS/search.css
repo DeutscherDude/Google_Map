@@ -1,5 +1,45 @@
 .search{
     position: absolute;
-    right: 0px;
-    width: 300px;
+    display: grid;
+    grid-template-columns: 11rem 11rem 5rem;
+    grid-gap: 1rem;
+    right: 4rem;
+    margin-left: auto;
+    width: fit-content;
+    height: fit-content;
+    z-index: 9;
+    overflow: hidden;
+    background-color: rgba(240, 248, 255, 0.7);
+    border-radius: 0.5rem;
+}
+.origin-input{
+    display: inline-block;
+}
+.destination-input{
+    margin-top: 0rem;
+}
+.search-button{
+    width: fit-content;
+    block-size: fit-content;
+}
+input{
+    border: none;
+    border-radius: 0.2rem;
+}
+input:hover{
+    background-color: darkseagreen;
+    color: white;
+}
+button{
+    border: none;
+    border-radius: 0.5rem;
+    background-color: aqua;
+}
+button:hover{
+    background-color: darkblue;
+    color: white;
+    box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem rgba(0,0,0,0.5);
+}
+button:active{
+    transform: translateY(0.1rem);
 }

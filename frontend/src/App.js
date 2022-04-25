@@ -3,10 +3,13 @@ import Map from "./Components/Map";
 import Search from "./Components/Search"
 
 function App() {
+
+
+
     return (
         <div>
             <Search />
-            <Map />
+            <Map origins="Wolsztyn" destination="Poznań"/>
         </div>
     );
 }
