@@ -1,12 +1,13 @@
 import React from "react";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api"
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import "../CSS/Map.css";
-require('dotenv').config();
 
-const containerStyle = {
-    width: '1600px',
-    height: '1000px'
-};
+function size() {
+    return {
+        height: window.innerHeight,
+        width: window.innerWidth
+    }
+}
 
 const center = {
     lat: 52,
@@ -22,22 +23,32 @@ const Map = () => {
     
     const [map, setMap] = React.useState(null);
 
+    const [ dim, setDim ] = React.useState(size());
+
+    const _handleWindowResize = () => {
+        let currentSize = size();
+        setDim(currentSize);
+    };
+
     const onUnmount = React.useCallback(function callback(map) {
         setMap(null)
+        window.removeEventListener('resize', _handleWindowResize)
     }, []);
 
     const onLoad = React.useCallback(function callback(map) {
         const bounds = new window.google.maps.LatLngBounds();
         map.fitBounds(bounds);
+        map.setCenter({ lat: 50, lng: 20});
+        window.addEventListener('resize', _handleWindowResize);
         setMap(map)
     }, []);
 
     return isLoaded ? (
         <div>
             <GoogleMap
-                mapContainerStyle={containerStyle}
-                zoom={8}
+                mapContainerStyle={dim}
                 center={center}
+                zoom={8}
                 onUnmount={onUnmount}
                 onLoad={onLoad}
             ></GoogleMap>
