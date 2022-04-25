@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import "../CSS/Map.css";
 
@@ -9,21 +9,17 @@ function size() {
     }
 }
 
-const center = {
-    lat: 52,
-    lng: 20
-};
-
-
 const Map = () => {
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.REACT_APP_API_KEY
     });
     
-    const [map, setMap] = React.useState(null);
+    const [map, setMap] = useState(null);
 
-    const [ dim, setDim ] = React.useState(size());
+    const [coordinates, setCoordinates] = useState({ lat: 52.4095238, lng: 16.931992 });
+
+    const [ dim, setDim ] = useState(size());
 
     const _handleWindowResize = () => {
         let currentSize = size();
@@ -38,19 +34,20 @@ const Map = () => {
     const onLoad = React.useCallback(function callback(map) {
         const bounds = new window.google.maps.LatLngBounds();
         map.fitBounds(bounds);
-        map.setCenter({ lat: 50, lng: 20});
         window.addEventListener('resize', _handleWindowResize);
         setMap(map)
+        map.panTo(coordinates)
     }, []);
 
     return isLoaded ? (
         <div>
             <GoogleMap
                 mapContainerStyle={dim}
-                center={center}
-                zoom={8}
+                center={coordinates}
+                zoom={1}
                 onUnmount={onUnmount}
                 onLoad={onLoad}
+
             ></GoogleMap>
         </div> 
     ) : <></>;
