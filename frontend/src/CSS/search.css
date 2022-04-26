@@ -1,38 +1,38 @@
-.search{
-    position: absolute;
-    display: grid;
-    grid-template-columns: 11rem 11rem 5rem;
-    grid-gap: 2rem;
-    right: 4rem;
-    margin-left: auto;
-    width: fit-content;
-    height: fit-content;
-    z-index: 9;
-    overflow: hidden;
-    background-color: rgba(240, 248, 255, 0.7);
-    border-radius: 0.5rem;
-}
-.origin-input{
-    width: fit-content;
-    display: inline-block;
-}
-.destination-input{
-    margin-top: 0rem;
-}
-.search-button{
-    width: fit-content;
-    block-size: fit-content;
-}
 input{
     border: none;
+    background-color: none;
     border-radius: 0.2rem;
 }
-input:hover{
+input:focus{
     background-color: darkseagreen;
     color: white;
 }
+
+.search{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    /* Center on the bottom of main div */
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9;
+}
+.origin-input{
+    width: fit-content;
+    color: rgba(240, 248, 255, 0.3);
+}
+
+.destination-input{
+    width:fit-content;
+    color: rgba(240, 248, 255, 0.3);
+}
+
 button{
     border: none;
+    font-size: medium;
     border-radius: 0.5rem;
     background-color: aqua;
 }
@@ -43,4 +43,33 @@ button:hover{
 }
 button:active{
     transform: translateY(0.1rem);
+}
+
+@media (min-width: 900px){
+    input{
+        font-size: large;
+    }
+    .search{
+        display: grid;
+        grid-template-columns: 11rem 11rem 5rem;
+        grid-gap: 6rem;
+        top: 1rem;
+        width: fit-content;
+        height: fit-content;
+        z-index: 9;
+        background-color: rgba(240, 248, 255, 0.7);
+        border-radius: 0.5rem;
+    }
+    .origin-input{
+        width: fit-content;
+        display: inline-block;
+    }
+    .destination-input{
+        margin-top: 0rem;
+    }
+    .search-button{
+        width: fit-content;
+        block-size: fit-content;
+        font-size: large;
+    }
 }

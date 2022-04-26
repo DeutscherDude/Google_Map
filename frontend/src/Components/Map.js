@@ -27,8 +27,6 @@ export default function Map({ directions }) {
     setDim(currentSize);
   };
 
-  console.log(directions);
-
   //Postmortem removal of event listener
   const onUnmount = useCallback(function callback(map) {
     setMap(null);

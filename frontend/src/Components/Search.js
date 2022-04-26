@@ -12,7 +12,7 @@ export default function Search({ childToParent }) {
   const [destination, setDestination] = useState("");
 
   return (
-    <div>
+    <div id="search-container">
       <div className="search">
         <div className="origin-input">
           <input
@@ -28,16 +28,19 @@ export default function Search({ childToParent }) {
             onChange={(e) => setDestination(e.target.value)}
           />
         </div>
-        <button
-          onClick={() =>
-            childToParent({
-              origin: origin,
-              destination: destination,
-            })
-          }
-        >
-          Search
-        </button>
+        <div className="button-container">
+          <button
+            onClick={() =>
+              childToParent({
+                origin: origin,
+                destination: destination,
+              })
+            }
+            disabled={true}
+          >
+            Search
+          </button>
+        </div>
       </div>
     </div>
   );

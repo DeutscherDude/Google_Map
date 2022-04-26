@@ -16,16 +16,13 @@ export default function App() {
 
   const updateParent = (newValues) => {
     setLookupValues(newValues);
-    console.log(lookupValues)
-};
-
+    console.log(lookupValues);
+  };
 
   return isLoaded ? (
     <div>
       <Search childToParent={updateParent} />
-      <Map
-        directions={lookupValues}
-      />
+      <Map directions={lookupValues} />
     </div>
   ) : null;
 }
