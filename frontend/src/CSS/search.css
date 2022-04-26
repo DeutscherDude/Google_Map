@@ -2,7 +2,7 @@
     position: absolute;
     display: grid;
     grid-template-columns: 11rem 11rem 5rem;
-    grid-gap: 1rem;
+    grid-gap: 2rem;
     right: 4rem;
     margin-left: auto;
     width: fit-content;
@@ -13,6 +13,7 @@
     border-radius: 0.5rem;
 }
 .origin-input{
+    width: fit-content;
     display: inline-block;
 }
 .destination-input{

@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import {
   GoogleMap,
-  useJsApiLoader,
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import "../CSS/Map.css";
@@ -19,12 +18,7 @@ function size() {
   };
 }
 
-const Map = (props) => {
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.REACT_APP_API_KEY,
-    language: "pl",
-  });
+export default function Map (props) {
 
   const [map, setMap] = useState(null);
   const [coordinates, setCoordinates] = useState({
@@ -32,6 +26,7 @@ const Map = (props) => {
     lng: 16.931992,
   });
   const [directions, setDirections] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const [dim, setDim] = useState(size());
 
@@ -43,6 +38,7 @@ const Map = (props) => {
 
   const onUnmount = useCallback(function callback(map) {
     setMap(null);
+    setCoordinates(null);
     window.removeEventListener("resize", _handleWindowResize);
   }, []);
 
@@ -78,9 +74,10 @@ const Map = (props) => {
     window.addEventListener("resize", _handleWindowResize);
     setMap(map);
     map.panTo(coordinates);
+    setIsLoaded(true);
   }, []);
 
-  return isLoaded ? (
+  return (
     <div className="map">
       <GoogleMap
         mapContainerStyle={dim}
@@ -91,9 +88,5 @@ const Map = (props) => {
         {directions && <DirectionsRenderer directions={directions} />}
       </GoogleMap>
     </div>
-  ) : (
-    <></>
-  );
+  )
 };
-
-export default Map;
