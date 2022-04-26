@@ -9,23 +9,23 @@ export default function App() {
     libraries: ["places"],
   });
 
-  const directionsRef = useRef(null);
-
   const [lookupValues, setLookupValues] = useState({
-    origin: "",
-    destination: "",
+    origin: "Poznań",
+    destination: "Poznań, Stary Rynek",
   });
 
-  useEffect(() => {
-    console.log(lookupValues);
-  }, [lookupValues]);
+  const updateParent = (newValues) => {
+    setLookupValues(newValues);
+    console.log(lookupValues)
+};
+
 
   return isLoaded ? (
     <div>
-      <Search childToParent={setLookupValues} />
+      <Search childToParent={updateParent} />
       <Map
-        directions={lookupValues}
-        ref={directionsRef}
+        origin={lookupValues.origin}
+        destination={lookupValues.destination}
       />
     </div>
   ) : null;

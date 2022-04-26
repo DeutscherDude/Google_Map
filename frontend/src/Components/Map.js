@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import { GoogleMap, DirectionsRenderer } from "@react-google-maps/api";
 import "../CSS/Map.css";
 
@@ -9,77 +9,81 @@ function size() {
   };
 }
 
-export default function Map(props) {
+export default function Map({ origin, destination }) {
   const [map, setMap] = useState(null);
   const [coordinates, setCoordinates] = useState({
     lat: 52.4095238,
     lng: 16.931992,
   });
-  const [directions, setDirections] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
   const [dim, setDim] = useState(size());
+  const [origins, setOrigins] = useState();
+  const [directions, setDirections] = useState();
+  const prevDirections = useRef();
 
+  //Dynamic map resizing callback
   const _handleWindowResize = (e) => {
     e.preventDefault();
     let currentSize = size();
     setDim(currentSize);
   };
 
+  //Postmortem removal of event listener
   const onUnmount = useCallback(function callback(map) {
     setMap(null);
     setCoordinates(null);
+    setIsLoaded(false);
     window.removeEventListener("resize", _handleWindowResize);
   }, []);
 
   useEffect(() => {
-    if (isLoaded) {
-      const directionsService = new window.google.maps.DirectionsService();
-
-      new Promise((resolve, reject) => {
-        directionsService
-          .route(
-            {
-              origin: props.origins,
-              destination: props.destination,
-              travelMode: "DRIVING",
-            },
-            (result, status) => {
-              if (status === "OK") {
-                setDirections(result);
-              } else {
-                reject(status);
-              }
+    const directionsService = new window.google.maps.DirectionsService();
+    new Promise((resolve, reject) => {
+      directionsService
+        .route(
+          {
+            origin: origin,
+            destination: destination,
+            travelMode: "DRIVING",
+          },
+          (result, status) => {
+            if (status === "OK") {
+              console.log(result)
+              setDirections(result);
+            } else {
+              reject(status);
             }
-          )
-          .catch((e) => console.log(e));
-      });
-    }
-  }, [directions]);
-
+          }
+        )
+        .catch((e) => console.log(e));
+    });
+  }, [origins]);
+ 
   const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds();
-
+    console.log("I rendered!");
     map.fitBounds(bounds);
     window.addEventListener("resize", _handleWindowResize);
     setMap(map);
+    setOrigins(origin);
+    setDirections(destination);
     map.panTo(coordinates);
     setIsLoaded(true);
   }, []);
 
   return (
     <div className="map">
-      <div>{directions}</div>
       <GoogleMap
         mapContainerStyle={dim}
         zoom={3}
         onUnmount={onUnmount}
         onLoad={onLoad}
+        origin={origin}
+        destination={destination}
       >
         {directions && (
           <DirectionsRenderer
             directions={directions}
-            onDirectionsChanged={handleDirectionsChanged}
           />
         )}
       </GoogleMap>
