@@ -1,21 +1,32 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import Map from "./Components/Map";
-import Search from "./Components/Search"
+import Search from "./Components/Search";
 
-function App() {
+export default function App() {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_API_KEY,
+    libraries: ["places"],
+  });
 
-    const {isLoaded} = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_API_KEY,
-        libraries: ["places"]
-    });
+  const directionsRef = useRef(null);
 
-    return isLoaded ? ((
-        <div>
-            <Search />
-            <Map origins="Wolsztyn" destination="Poznań"/>
-        </div>
-    )) : null;
+  const [lookupValues, setLookupValues] = useState({
+    origin: "",
+    destination: "",
+  });
+
+  useEffect(() => {
+    console.log(lookupValues);
+  }, [lookupValues]);
+
+  return isLoaded ? (
+    <div>
+      <Search childToParent={setLookupValues} />
+      <Map
+        directions={lookupValues}
+        ref={directionsRef}
+      />
+    </div>
+  ) : null;
 }
-
-export default App;

@@ -1,14 +1,5 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useRef,
-  useLayoutEffect,
-} from "react";
-import {
-  GoogleMap,
-  DirectionsRenderer,
-} from "@react-google-maps/api";
+import React, { useEffect, useState, useCallback } from "react";
+import { GoogleMap, DirectionsRenderer } from "@react-google-maps/api";
 import "../CSS/Map.css";
 
 function size() {
@@ -18,8 +9,7 @@ function size() {
   };
 }
 
-export default function Map (props) {
-
+export default function Map(props) {
   const [map, setMap] = useState(null);
   const [coordinates, setCoordinates] = useState({
     lat: 52.4095238,
@@ -65,7 +55,7 @@ export default function Map (props) {
           .catch((e) => console.log(e));
       });
     }
-  }, [isLoaded]);
+  }, [directions]);
 
   const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds();
@@ -79,14 +69,20 @@ export default function Map (props) {
 
   return (
     <div className="map">
+      <div>{directions}</div>
       <GoogleMap
         mapContainerStyle={dim}
         zoom={3}
         onUnmount={onUnmount}
         onLoad={onLoad}
       >
-        {directions && <DirectionsRenderer directions={directions} />}
+        {directions && (
+          <DirectionsRenderer
+            directions={directions}
+            onDirectionsChanged={handleDirectionsChanged}
+          />
+        )}
       </GoogleMap>
     </div>
-  )
-};
+  );
+}
