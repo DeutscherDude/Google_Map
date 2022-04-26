@@ -9,7 +9,7 @@ function size() {
   };
 }
 
-export default function Map({ origin, destination }) {
+export default function Map({ directions }) {
   const [map, setMap] = useState(null);
   const [coordinates, setCoordinates] = useState({
     lat: 52.4095238,
@@ -17,8 +17,7 @@ export default function Map({ origin, destination }) {
   });
   const [isLoaded, setIsLoaded] = useState(false);
   const [dim, setDim] = useState(size());
-  const [origins, setOrigins] = useState();
-  const [directions, setDirections] = useState();
+  const [road, setRoad] = useState();
   const prevDirections = useRef();
 
   //Dynamic map resizing callback
@@ -27,6 +26,8 @@ export default function Map({ origin, destination }) {
     let currentSize = size();
     setDim(currentSize);
   };
+
+  console.log(directions);
 
   //Postmortem removal of event listener
   const onUnmount = useCallback(function callback(map) {
@@ -42,14 +43,14 @@ export default function Map({ origin, destination }) {
       directionsService
         .route(
           {
-            origin: origin,
-            destination: destination,
+            origin: directions.origin,
+            destination: directions.destination,
             travelMode: "DRIVING",
           },
           (result, status) => {
             if (status === "OK") {
-              console.log(result)
-              setDirections(result);
+              console.log(result);
+              setRoad(result);
             } else {
               reject(status);
             }
@@ -57,35 +58,27 @@ export default function Map({ origin, destination }) {
         )
         .catch((e) => console.log(e));
     });
-  }, [origins]);
- 
+  }, [directions]);
+
   const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds();
     console.log("I rendered!");
     map.fitBounds(bounds);
     window.addEventListener("resize", _handleWindowResize);
     setMap(map);
-    setOrigins(origin);
-    setDirections(destination);
     map.panTo(coordinates);
     setIsLoaded(true);
   }, []);
 
   return (
-    <div className="map">
+    <div className="map" directions={directions}>
       <GoogleMap
         mapContainerStyle={dim}
         zoom={3}
         onUnmount={onUnmount}
         onLoad={onLoad}
-        origin={origin}
-        destination={destination}
       >
-        {directions && (
-          <DirectionsRenderer
-            directions={directions}
-          />
-        )}
+        {road && <DirectionsRenderer directions={road} />}
       </GoogleMap>
     </div>
   );

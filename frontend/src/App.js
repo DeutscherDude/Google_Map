@@ -24,8 +24,7 @@ export default function App() {
     <div>
       <Search childToParent={updateParent} />
       <Map
-        origin={lookupValues.origin}
-        destination={lookupValues.destination}
+        directions={lookupValues}
       />
     </div>
   ) : null;
