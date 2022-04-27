@@ -28,6 +28,9 @@ module.exports = function(_env, argv){
             ],
 
         },
+        devServer: {
+            historyApiFallback: true,
+          },
         plugins: [
             new HtmlWebpackPlugin({
               template: path.join(__dirname, "public", "index.html"),

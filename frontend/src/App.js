@@ -35,7 +35,16 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route
-          exact path="/map"
+          exact path="/"
+          element={
+          <div>
+          <Main childToParent={updateParent} />
+          </div>
+          }
+        />
+        <Route
+          exact
+          path="search"
           element={
             <div>
               <Sidebar distance={distance} duration={duration} />
@@ -44,13 +53,7 @@ export default function App() {
             </div>
           }
         />
-        <Route
-          exact path="/"
-          element={
-          <div>
-          <Main childToParent={updateParent} />
-          </div>}
-        />
+        <Route path="*" element={<div>404</div>} />
       </Routes>
     </BrowserRouter>
   ) : null;
