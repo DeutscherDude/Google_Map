@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "webpack serve",
-    "build": "webpack",
+    "build": "webpack && echo '/* /index.html 200' | cat >dist/_redirects",
     "test": "jest --env=jsdom --watchAll"
   },
   "author": "Jakub Barczewski",
