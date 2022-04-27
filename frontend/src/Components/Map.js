@@ -47,7 +47,10 @@ export default function Map({ directions, childToParent }) {
           },
           (result, status) => {
             if (status === "OK") {
-              childToParent(result.routes[0].legs[0].distance.value, result.routes[0].legs[0].duration.value);
+              childToParent(
+                result.routes[0].legs[0].distance.value,
+                result.routes[0].legs[0].duration.value
+              );
               setRoad(result);
             } else {
               reject(status);
@@ -60,7 +63,7 @@ export default function Map({ directions, childToParent }) {
 
   const onLoad = useCallback(function callback(map) {
     console.log(directions);
-    console.log(typeof(directions));
+    console.log(typeof directions);
     const bounds = new window.google.maps.LatLngBounds();
     console.log("I rendered!");
     map.fitBounds(bounds);

@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import Map from "./Components/Map";
 import Search from "./Components/Search";
+import { time, distanceKm, tripCost } from "./util";
+import Sidebar from "./Components/Sidebar";
 
 export default function App() {
   const { isLoaded } = useLoadScript({
@@ -17,12 +19,6 @@ export default function App() {
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  const time = () => {
-    let travelTimeHours = Math.floor(duration/(60*60));
-    let travelTimeMinutes = Math.ceil((duration%(60*60))/60);
-    return `${travelTimeHours}hrs ${travelTimeMinutes}mins`;
-  }
-
   const getMetrics = (receivedDistance, receivedDuration) => {
     setDistance(receivedDistance);
     setDuration(receivedDuration);
@@ -34,7 +30,10 @@ export default function App() {
 
   return isLoaded ? (
     <div>
-      <div>{time()}</div>
+      <div>Time of the trip: {time(duration)}</div>
+      <div>Distance of the trip: {distanceKm(distance)}</div>
+      <div>Cost of the trip: {tripCost(distance)}</div>
+      <Sidebar/>
       <Search childToParent={updateParent} />
       <Map directions={lookupValues} childToParent={getMetrics} />
     </div>
