@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import usePlacesAutocomplete from "use-places-autocomplete";
 import "../CSS/search.css";
 
 export default function Search({ childToParent }) {
