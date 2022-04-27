@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import usePlacesAutocomplete from "use-places-autocomplete";
 import "../CSS/search.css";
 
 export default function Search({ childToParent }) {
+  function handleSubmit(event) {
+    console.log(origin);
+    console.log(destination);
+  }
 
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");

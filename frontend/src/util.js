@@ -10,8 +10,12 @@ function distanceKm(distance) {
     return distanceInKm;
   }
 
-function tripCost (distance){
-    let cost = distanceKm(distance) * 0.0701 * 1.1;
+function tripCost (distance, kmCost){
+  if (kmCost === undefined) {
+      kmCost = 0.0701;
+    }
+    console.log(kmCost);  
+    let cost = distanceKm(distance) * kmCost * 1.1;
     cost = +cost.toFixed(2);
     return cost;
   }
