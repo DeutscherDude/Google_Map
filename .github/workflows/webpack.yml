@@ -25,5 +25,5 @@ jobs:
     - name: Build
       run: |
         ls
-        cd .. && cd .. && cd frontend && npm install
+        frontend && npm install
         npx webpack
