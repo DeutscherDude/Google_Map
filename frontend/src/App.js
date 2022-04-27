@@ -4,6 +4,7 @@ import Map from "./Components/Map";
 import Search from "./Components/Search";
 import { time, distanceKm, tripCost } from "./util";
 import Sidebar from "./Components/Sidebar";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 
 export default function App() {
   const { isLoaded } = useLoadScript({
@@ -29,13 +30,19 @@ export default function App() {
   };
 
   return isLoaded ? (
-    <div>
-      <div>Time of the trip: {time(duration)}</div>
-      <div>Distance of the trip: {distanceKm(distance)}</div>
-      <div>Cost of the trip: {tripCost(distance)}</div>
-      <Sidebar/>
-      <Search childToParent={updateParent} />
-      <Map directions={lookupValues} childToParent={getMetrics} />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={
+        <div>
+          <div>Time of the trip: {time(duration)}</div>
+          <div>Distance of the trip: {distanceKm(distance)}</div>
+          <div>Cost of the trip: {tripCost(distance)}</div>
+          <Sidebar/>
+          <Search childToParent={updateParent} />
+          <Map directions={lookupValues} childToParent={getMetrics} />
+        </div>
+        }/>
+      </Routes>
+    </BrowserRouter>
   ) : null;
 }
