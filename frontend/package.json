@@ -7,7 +7,7 @@
     "start": "node ./src/index.js",
     "dev": "webpack serve",
     "build": "webpack",
-    "test": "jest --env=jsdom"
+    "test": "jest --env=jsdom --watchAll"
   },
   "author": "Jakub Barczewski",
   "license": "MIT",
