@@ -9,7 +9,7 @@ function size() {
   };
 }
 
-export default function Map({ directions }) {
+export default function Map({ directions, childToParent }) {
   const [map, setMap] = useState(null);
   const [coordinates, setCoordinates] = useState({
     lat: 52.4095238,
@@ -43,11 +43,11 @@ export default function Map({ directions }) {
           {
             origin: directions.origin,
             destination: directions.destination,
-            travelMode: "DRIVING",
+            travelMode: google.maps.TravelMode.DRIVING,
           },
           (result, status) => {
             if (status === "OK") {
-              console.log(result);
+              childToParent(result.routes[0].legs[0].distance.value, result.routes[0].legs[0].duration.value);
               setRoad(result);
             } else {
               reject(status);
@@ -59,6 +59,8 @@ export default function Map({ directions }) {
   }, [directions]);
 
   const onLoad = useCallback(function callback(map) {
+    console.log(directions);
+    console.log(typeof(directions));
     const bounds = new window.google.maps.LatLngBounds();
     console.log("I rendered!");
     map.fitBounds(bounds);

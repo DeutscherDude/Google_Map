@@ -36,7 +36,6 @@ export default function Search({ childToParent }) {
                 destination: destination,
               })
             }
-            disabled={true}
           >
             Search
           </button>

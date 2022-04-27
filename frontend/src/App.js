@@ -14,15 +14,29 @@ export default function App() {
     destination: "Poznań, Stary Rynek",
   });
 
+  const [distance, setDistance] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const time = () => {
+    let travelTimeHours = Math.floor(duration/(60*60));
+    let travelTimeMinutes = Math.ceil((duration%(60*60))/60);
+    return `${travelTimeHours}hrs ${travelTimeMinutes}mins`;
+  }
+
+  const getMetrics = (receivedDistance, receivedDuration) => {
+    setDistance(receivedDistance);
+    setDuration(receivedDuration);
+  };
+
   const updateParent = (newValues) => {
     setLookupValues(newValues);
-    console.log(lookupValues);
   };
 
   return isLoaded ? (
     <div>
+      <div>{time()}</div>
       <Search childToParent={updateParent} />
-      <Map directions={lookupValues} />
+      <Map directions={lookupValues} childToParent={getMetrics} />
     </div>
   ) : null;
 }
