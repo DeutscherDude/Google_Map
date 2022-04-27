@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import Map from "./Components/Map";
 import Search from "./Components/Search";
