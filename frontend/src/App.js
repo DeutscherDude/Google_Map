@@ -2,14 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import Map from "./Components/Map";
 import Search from "./Components/Search";
-import { time, distanceKm, tripCost } from "./util";
 import Sidebar from "./Components/Sidebar";
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 
 export default function App() {
+
+  const [ libraries ] = useState(['places']);
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_API_KEY,
-    libraries: ["places"],
+    libraries: libraries,
   });
 
   const [lookupValues, setLookupValues] = useState({
@@ -34,10 +36,7 @@ export default function App() {
       <Routes>
         <Route exact path="/" element={
         <div>
-          <div>Time of the trip: {time(duration)}</div>
-          <div>Distance of the trip: {distanceKm(distance)}</div>
-          <div>Cost of the trip: {tripCost(distance)}</div>
-          <Sidebar/>
+          <Sidebar distance={distance} duration={duration} />
           <Search childToParent={updateParent} />
           <Map directions={lookupValues} childToParent={getMetrics} />
         </div>

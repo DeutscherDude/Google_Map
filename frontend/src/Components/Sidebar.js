@@ -1,8 +1,8 @@
 import React from "react";
-import "../CSS/sidebar.css"
-import {time, distanceKm, tripCost} from "../util";
+import "../CSS/sidebar.css";
+import { time, distanceKm, tripCost } from "../util";
 
-const Sidebar = ({distance, duration}) => {
+const Sidebar = ({ distance, duration }) => {
   function onClick() {
     try {
       const sidebar = document.querySelector(".sidebar");
@@ -29,8 +29,12 @@ const Sidebar = ({distance, duration}) => {
     <div className="sidebar-container">
       <div className="sidebar">
         <div className="calculations">Time of the trip: {time(duration)}</div>
-        <div className="calculations">Distance of the trip: {distanceKm(distance)}</div>
-        <div className="calculations">Cost of the trip: {tripCost(distance)}</div>
+        <div className="calculations">
+          Trip distance: {distanceKm(distance)}km
+        </div>
+        <div className="calculations">
+          Cost of the trip: {tripCost(distance)}
+        </div>
       </div>
       <button onClick={onClick} className="sidebar-button">
         X

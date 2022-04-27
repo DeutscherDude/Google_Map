@@ -62,10 +62,7 @@ export default function Map({ directions, childToParent }) {
   }, [directions]);
 
   const onLoad = useCallback(function callback(map) {
-    console.log(directions);
-    console.log(typeof directions);
     const bounds = new window.google.maps.LatLngBounds();
-    console.log("I rendered!");
     map.fitBounds(bounds);
     window.addEventListener("resize", _handleWindowResize);
     setMap(map);

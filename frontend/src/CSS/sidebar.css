@@ -26,7 +26,8 @@
     float: right;
     padding: 0.5rem 1rem;
     right: 0;
-    margin-right: 11rem;
+    top: 3rem;
+    margin-right: 15rem;
     font-size: 2rem;
     transition: 0.5s;
     background-color: #fdfbfb;
@@ -41,6 +42,7 @@
     float: right;
     padding: 0.5rem 1rem;
     right: 0;
+    top: 3rem;
     margin-right: 1rem;
     font-size: 2rem;
     background-color: #fdfbfb;
