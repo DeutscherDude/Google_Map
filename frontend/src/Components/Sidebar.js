@@ -45,7 +45,7 @@ const Sidebar = ({ distance, duration }) => {
         <div className="calculations">
           Trip distance: {distanceKm(distance)}km
         </div>
-        <div className="calculations">Cost of the trip: {cost}</div>
+        <div className="calculations">Cost of the trip: {tripCost(kmCost, distance)}</div>
         <div className="labello">
           <label>cost per km</label>
         </div>
