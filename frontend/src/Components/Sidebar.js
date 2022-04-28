@@ -34,7 +34,7 @@ const Sidebar = ({ distance, duration }) => {
     let costVal = tripCost(kmCost, distance);
     setDistanceInKm(distanceVal);
     setCost(costVal);
-  }, [kmCost]);
+  }, [kmCost, distance]);
 
   return (
     <div className="sidebar-container">
