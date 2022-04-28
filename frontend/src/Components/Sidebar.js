@@ -31,7 +31,7 @@ const Sidebar = ({ distance, duration }) => {
 
   useEffect(() => {
     let distanceVal = distanceKm(distance);
-    let costVal = tripCost(distance, kmCost);
+    let costVal = tripCost(kmCost, distance);
     setDistanceInKm(distanceVal);
     setCost(costVal);
   }, [kmCost]);
@@ -39,19 +39,23 @@ const Sidebar = ({ distance, duration }) => {
   return (
     <div className="sidebar-container">
       <div className="sidebar">
-        <div className="calculations">Time of the trip: {time(duration)}</div>
+        <div className="calculations">
+          Travel time: {time(duration, distance)}
+        </div>
         <div className="calculations">
           Trip distance: {distanceKm(distance)}km
         </div>
-        <div className="calculations">
-          Cost of the trip: {cost}
-        </div>
+        <div className="calculations">Cost of the trip: {cost}</div>
         <div className="labello">
           <label>cost per km</label>
         </div>
         <div className="labello">
-          <input className="money" type="number" min="0.01" onChange={(e) => setKmCost(e.target.value)}>
-          </input>
+          <input
+            className="money"
+            type="number"
+            min="0.01"
+            onChange={(e) => setKmCost(e.target.value)}
+          ></input>
         </div>
       </div>
       <button onClick={onClick} className="sidebar-button">

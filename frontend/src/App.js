@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import Map from "./Components/Map";
 import Search from "./Components/Search";
@@ -15,8 +15,8 @@ export default function App() {
   });
 
   const [lookupValues, setLookupValues] = useState({
-    origin: "Poznań",
-    destination: "Poznań, Stary Rynek",
+    origin: "",
+    destination: "",
   });
 
   const [distance, setDistance] = useState(0);
@@ -43,8 +43,7 @@ export default function App() {
           }
         />
         <Route
-          exact
-          path="search"
+          exact path="search"
           element={
             <div>
               <Sidebar distance={distance} duration={duration} />

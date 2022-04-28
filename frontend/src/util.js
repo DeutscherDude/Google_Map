@@ -1,4 +1,7 @@
-function time (duration) {
+function time (duration, distance) {
+  if (distance > 800000) {
+    return `${Math.ceil(distance/800000)}days`
+    }
     let travelTimeHours = Math.floor(duration/(60*60));
     let travelTimeMinutes = Math.ceil((duration%(60*60))/60);
     return `${travelTimeHours}hrs ${travelTimeMinutes}mins`;
@@ -10,11 +13,13 @@ function distanceKm(distance) {
     return distanceInKm;
   }
 
-function tripCost (distance, kmCost){
+function tripCost (kmCost, distance){
   if (kmCost === undefined) {
       kmCost = 0.0701;
     }
-    console.log(kmCost);  
+  if(distance > 800000){
+    return Math.ceil(distance/800000) * 1000
+  }
     let cost = distanceKm(distance) * kmCost * 1.1;
     cost = +cost.toFixed(2);
     return cost;
